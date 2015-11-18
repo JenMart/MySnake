@@ -18,7 +18,12 @@ public class DrawSnakeGamePanel extends JPanel {
 	private Kibble kibble;
 	private Score score;
 	private Blocks block;
-    private final static ArrayList<Blocks> gameWalls = new ArrayList<Blocks>();
+
+	public static ArrayList<Blocks> getGameWalls() {
+		return gameWalls;
+	}
+
+	private final static ArrayList<Blocks> gameWalls = new ArrayList<Blocks>();
 
 	public static void addBlock(){
 		boolean addBlock = true;
@@ -104,12 +109,11 @@ public class DrawSnakeGamePanel extends JPanel {
 		displayGameGrid(g);
 		displaySnake(g);
 		displayKibble(g);
-        block.displayBlock(g);
-//		if (addBlock == false){
-//			displayBlock(g);
-//            block.
-//		}
-//		displayBlock(g);
+//        block.displayBlock(g);
+		if (addBlock == true){
+			block.displayBlock(g);
+		}
+//		block.displayBlock(g);
 	}
 
 	private void displayGameGrid(Graphics g) {

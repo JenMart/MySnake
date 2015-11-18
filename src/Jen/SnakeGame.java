@@ -9,28 +9,25 @@ public class SnakeGame {
 	Scanner scanner;
 	public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
 	public static int yPixelMaxDimension = 501;
-
 	public static int xSquares ;
 	public static int ySquares ;
-
 	public final static int squareSize = 50;
-
 	protected static Snake snake ;
 	protected static Blocks block;
-
 	protected static Kibble kibble;
-
 	protected static Score score;
-
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
 	static final int GAME_OVER = 3;
 	static final int GAME_WON = 4;   //The values are not important. The important thing is to use the constants
 	static final int GAME_OPTIONS = 5;
 	//instead of the values so you are clear what you are setting. Easy to forget what number is Game over vs. game won
-	//Using constant names instead makes it easier to keep it straight. Refer to these variables 
-	//using statements such as SnakeGame.GAME_OVER 
+	//Using constant names instead makes it easier to keep it straight. Refer to these variables
 
+	private static boolean hasWarpWalls = false; // AMD: variable to help implement warp walls.
+	private static boolean hasBlocks = false;  // AMD: variable to help implement maze walls
+	//using statements such as SnakeGame.GAME_OVER 
+	protected static final int numBlockWalls = 3;
 	private static int gameStage = BEFORE_GAME;  //use this to figure out what should be happening. 
 	//Other classes like Snake and DrawSnakeGamePanel will need to query this, and change its value
 
@@ -84,6 +81,10 @@ public class SnakeGame {
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel, block);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
+		DrawSnakeGamePanel.getGameWalls().clear();
+		for (int i = 0; i < numBlockWalls; i++) {
+			DrawSnakeGamePanel.getGameWalls().add(new Blocks(snake));
+		}
 	}
 
 	public static void main(String[] args) {
@@ -117,5 +118,21 @@ public class SnakeGame {
 
 	public static void setGameStage(int gameStage) {
 		SnakeGame.gameStage = gameStage;
+	}
+
+	public static boolean isHasWarpWalls() {
+		return hasWarpWalls;
+	}
+
+	public static void setHasWarpWalls(boolean hasWarpWalls) {
+		SnakeGame.hasWarpWalls = hasWarpWalls;
+	}
+
+	public static boolean isHasBlocks() {
+		return hasBlocks;
+	}
+
+	public static void setHasBlocks(boolean hasBlocks) {
+		SnakeGame.hasBlocks = hasBlocks;
 	}
 }
