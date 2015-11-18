@@ -10,6 +10,8 @@ public class Blocks {
 
     private int blockX;
     private int blocky;
+    private int gridX;
+    private int gridY;
     private char v_or_h;  // char that is either 'v' or 'h'
     public Blocks (Snake e){
 
@@ -17,21 +19,29 @@ public class Blocks {
     }
 
     protected void makeBlock(Snake e) {
-        Random random = new Random();
-        boolean snakeHitBlock = true;
-        while (snakeHitBlock == true) {
-            blockX = random.nextInt(SnakeGame.xSquares);
-            blocky = random.nextInt(SnakeGame.ySquares);
-            snakeHitBlock = e.isSnakeSegment(blockX, blocky);
-            /////////
-            int pickHorV = random.nextInt(2);
-            if (pickHorV == 0) {
-                this.v_or_h = 'v';
-            } else {
-                this.v_or_h = 'h';
-            }
-
-        }
+        Random position = new Random();
+        int xLines = SnakeGame.getxSquares() - 2;
+        this.gridX = position.nextInt(xLines) + 1;  // second offset, so walls appear inside game board
+        int yLines = SnakeGame.getySquares() - 2;
+        this.gridY = position.nextInt(yLines) + 1;
+        int pickHorV = position.nextInt(2);
+        if (pickHorV == 0) { this.v_or_h = 'v'; }
+        else { this.v_or_h = 'h'; }
+//        Random random = new Random();
+//        boolean snakeHitBlock = true;
+//        while (snakeHitBlock == true) {
+//            blockX = random.nextInt(SnakeGame.xSquares);
+//            blocky = random.nextInt(SnakeGame.ySquares);
+//            snakeHitBlock = e.isSnakeSegment(blockX, blocky);
+//            /////////
+//            int pickHorV = random.nextInt(2);
+//            if (pickHorV == 0) {
+//                this.v_or_h = 'v';
+//            } else {
+//                this.v_or_h = 'h';
+//            }
+//
+//        }
     }
     public void displayBlock(Graphics g){ //To make maz block
         g.setColor(Color.BLUE);
@@ -51,8 +61,16 @@ public class Blocks {
         }
     }
 
+    public int getGridX() {
+        return gridX;
+    }
 
-
+    public int getGridY() {
+        return gridY;
+    }
+    public char getV_or_h() {
+        return v_or_h;
+    }
     public int getBlockX() {
         return blockX;
     }

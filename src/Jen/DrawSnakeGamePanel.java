@@ -18,6 +18,8 @@ public class DrawSnakeGamePanel extends JPanel {
 	private Kibble kibble;
 	private Score score;
 	private Blocks block;
+	private static int numBlocks =3;
+	// FINDBUGS: says this should be final.
 
 	public static ArrayList<Blocks> getGameWalls() {
 		return gameWalls;
@@ -34,7 +36,7 @@ public class DrawSnakeGamePanel extends JPanel {
 		this.snake = s;
 		this.kibble = k;
 		this.score = sc;
-		this.block = b;
+//		this.block = b;
 	}
 	
 	public Dimension getPreferredSize() {
@@ -109,10 +111,13 @@ public class DrawSnakeGamePanel extends JPanel {
 		displayGameGrid(g);
 		displaySnake(g);
 		displayKibble(g);
+		score.getScore();
+//		displayBlock(g);
 //        block.displayBlock(g);
-		if (addBlock == true){
-			block.displayBlock(g);
-		}
+//		if (addBlock == true){
+//		for (int i = 0; i < numBlocks; i++) {
+//			block.displayBlock(g);
+//		}
 //		block.displayBlock(g);
 	}
 
@@ -137,6 +142,7 @@ public class DrawSnakeGamePanel extends JPanel {
 
         for(Blocks b : gameWalls){
             b.displayBlock(g);
+			b.displayBlock(g);
         }
 	}
 
@@ -158,8 +164,13 @@ public class DrawSnakeGamePanel extends JPanel {
 //		int x = block.getBlockX() * SnakeGame.squareSize;
 //		int y = block.getBlockY() * SnakeGame.squareSize;
 //		g.fillRect(x + 1, y + 1, SnakeGame.squareSize - 2, SnakeGame.squareSize - 2);
-////		for (int z = 1 ; z < 3 ; z++) {
-////			g.fillRect(x + z, y + z, SnakeGame.squareSize - z, SnakeGame.squareSize - z);
+//				for (int i = 0; i < numBlocks; i++) {
+//					 x = block.getBlockX() * SnakeGame.squareSize;
+//					 y = block.getBlockY() * SnakeGame.squareSize;
+//					g.fillRect(x + 1, y + 1, SnakeGame.squareSize - 2, SnakeGame.squareSize - 2);
+//		}
+//		for (int z = 1 ; z < 3 ; z++) {
+//			g.fillRect(x + z, y + z, SnakeGame.squareSize - z, SnakeGame.squareSize - z);
 ////		}
 //        if (v_or_h == 'v') {
 //            // if vertical, x is 3px wide and y changes
@@ -199,6 +210,6 @@ public class DrawSnakeGamePanel extends JPanel {
 		g.drawString("Press q to quit the game",100,300);
 
 	}
-    
+
 }
 
