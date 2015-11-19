@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /** This class responsible for displaying the graphics, so the snake, grid, kibble, instruction text and high score
  *
@@ -17,24 +18,24 @@ public class DrawSnakeGamePanel extends JPanel {
 	private Snake snake;
 	private Kibble kibble;
 	private Score score;
-	private Blocks block;
+	private List<Block> blocks;
 
-	public static ArrayList<Blocks> getGameWalls() {
+	public static ArrayList<Block> getGameWalls() {
 		return gameWalls;
 	}
 
-	private final static ArrayList<Blocks> gameWalls = new ArrayList<Blocks>();
+	private final static ArrayList<Block> gameWalls = new ArrayList<Block>();
 
 	public static void addBlock(){
 		boolean addBlock = true;
 		System.out.println();
 	}
 	
-	DrawSnakeGamePanel(Snake s, Kibble k, Score sc, Blocks b){
+	DrawSnakeGamePanel(Snake s, Kibble k, Score sc, List b){
 		this.snake = s;
 		this.kibble = k;
 		this.score = sc;
-		this.block = b;
+		this.blocks = b;
 	}
 	
 	public Dimension getPreferredSize() {
@@ -109,10 +110,12 @@ public class DrawSnakeGamePanel extends JPanel {
 		displayGameGrid(g);
 		displaySnake(g);
 		displayKibble(g);
-//        block.displayBlock(g);
-		if (addBlock == true){
+		for(Block block : blocks){
 			block.displayBlock(g);
 		}
+//		if (addBlock == true){
+//			block.displayBlock(g);
+//		}
 //		block.displayBlock(g);
 	}
 
@@ -135,7 +138,7 @@ public class DrawSnakeGamePanel extends JPanel {
 			g.drawLine(x, 0, x, maxY);
 		}
 
-        for(Blocks b : gameWalls){
+        for(Block b : gameWalls){
             b.displayBlock(g);
         }
 	}

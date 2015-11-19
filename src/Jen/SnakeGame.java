@@ -1,6 +1,8 @@
 package Jen;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 
@@ -13,7 +15,8 @@ public class SnakeGame {
 	public static int ySquares ;
 	public final static int squareSize = 50;
 	protected static Snake snake ;
-	protected static Blocks block;
+//	protected static Block block;
+	protected static List<Block> blocks;
 	protected static Kibble kibble;
 	protected static Score score;
 	static final int BEFORE_GAME = 1;
@@ -52,7 +55,7 @@ public class SnakeGame {
 		snakeFrame.setVisible(true);
 		snakeFrame.setResizable(false);
 
-		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, block); //added block
+		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, blocks); //added block
 		snakePanel.setFocusable(true);
 		snakePanel.requestFocusInWindow(); //required to give this component the focus so it can generate KeyEvents
 
@@ -72,19 +75,21 @@ public class SnakeGame {
 		snake = new Snake(xSquares, ySquares, squareSize);
 		kibble = new Kibble(snake);
 		score = new Score();
-		block = new Blocks(snake);
-
+		blocks = new ArrayList<Block>();
+		for(int i = 0; i < 3 ; i++){
+			blocks.add(new Block(snake));
+		}
 		gameStage = BEFORE_GAME;
 	}
 
 	protected static void newGame() { //Starts clock when new game begins.
 		Timer timer = new Timer();
-		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel, block);
+		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel, blocks);
 		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
 		DrawSnakeGamePanel.getGameWalls().clear();
-		for (int i = 0; i < numBlockWalls; i++) {
-			DrawSnakeGamePanel.getGameWalls().add(new Blocks(snake));
-		}
+//		for (int i = 0; i < numBlockWalls; i++) {
+//			DrawSnakeGamePanel.getGameWalls().add(new Block(snake));
+//		}
 	}
 
 	public static void main(String[] args) {
@@ -101,7 +106,7 @@ public class SnakeGame {
 		System.out.println("things");
 		xPixelMaxDimension +=50;
 		yPixelMaxDimension +=50;
-		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, block);
+		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, blocks);
 	}
 
 

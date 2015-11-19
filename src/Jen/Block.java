@@ -6,12 +6,12 @@ import java.util.Random;
 /**
  * Created by Jen Mart on 11/13/2015.
  */
-public class Blocks {
+public class Block {
 
     private int blockX;
     private int blocky;
     private char v_or_h;  // char that is either 'v' or 'h'
-    public Blocks (Snake e){
+    public Block(Snake e){
 
         makeBlock(e);
     }
@@ -24,12 +24,12 @@ public class Blocks {
             blocky = random.nextInt(SnakeGame.ySquares);
             snakeHitBlock = e.isSnakeSegment(blockX, blocky);
             /////////
-            int pickHorV = random.nextInt(2);
-            if (pickHorV == 0) {
-                this.v_or_h = 'v';
-            } else {
-                this.v_or_h = 'h';
-            }
+//            int pickHorV = random.nextInt(2);
+//            if (pickHorV == 0) {
+//                this.v_or_h = 'v';
+//            } else {
+//                this.v_or_h = 'h';
+//            }
 
         }
     }
@@ -42,13 +42,13 @@ public class Blocks {
 //		for (int z = 1 ; z < 3 ; z++) {
 //			g.fillRect(x + z, y + z, SnakeGame.squareSize - z, SnakeGame.squareSize - z);
 //		}
-        if (v_or_h == 'v') {
-            // if vertical, x is 3px wide and y changes
-            g.fillRect(x-1, y , 3, SnakeGame.squareSize);
-        } else {
-            // if horizontal, y is 3px wide and x changes
-            g.fillRect(x, y-1, SnakeGame.squareSize, 3);
-        }
+//        if (v_or_h == 'v') {
+//            // if vertical, x is 3px wide and y changes
+//            g.fillRect(x-1, y , 3, SnakeGame.squareSize);
+//        } else {
+//            // if horizontal, y is 3px wide and x changes
+//            g.fillRect(x, y-1, SnakeGame.squareSize, 3);
+//        }
     }
 
 

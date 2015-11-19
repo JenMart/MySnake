@@ -2,6 +2,7 @@ package Jen;
 
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Snake {
 
@@ -258,12 +259,15 @@ public class Snake {
 		return true;
 	}
 
-    public boolean didHitBlock(Blocks blocks){
-        if (blocks.getBlockX() == snakeHeadX && blocks.getBlockY() == snakeHeadY){
-            SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-            return true;
-        }
+    public boolean didHitBlock(List<Block> blocks){
+		for(Block block : blocks) {
+			if (block.getBlockX() == snakeHeadX && block.getBlockY() == snakeHeadY) {
+
+				return true;
+			}
+		}
         return false;
+
     }
 
 	public boolean didEatKibble(Kibble kibble) {
