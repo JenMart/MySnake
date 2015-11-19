@@ -14,7 +14,7 @@ import java.util.List;
 public class DrawSnakeGamePanel extends JPanel {
 	
 	private static int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
-	boolean addBlock = false;
+	boolean addBlock = true;
 	private Snake snake;
 	private Kibble kibble;
 	private Score score;
@@ -26,9 +26,12 @@ public class DrawSnakeGamePanel extends JPanel {
 
 	private final static ArrayList<Block> gameWalls = new ArrayList<Block>();
 
-	public static void addBlock(){
-		boolean addBlock = true;
-		System.out.println();
+	public void changeAddBlock(){
+        addBlock = !addBlock;
+//        if(!addBlock) {
+//            blocks = new ArrayList<Block>();
+//        }
+        displayBlocks(getGraphics());
 	}
 	
 	DrawSnakeGamePanel(Snake s, Kibble k, Score sc, List b){
@@ -91,13 +94,13 @@ public class DrawSnakeGamePanel extends JPanel {
 
 		g.clearRect(100, 100, 350, 350);
 		g.drawString("GAME OVER", 150, 150);
-		
+
 		String textScore = score.getStringScore();
 		String textHighScore = score.getStringHighScore();
 		String newHighScore = score.newHighScore();
 		
 		g.drawString("SCORE = " + textScore, 150, 250);
-		
+
 		g.drawString("HIGH SCORE = " + textHighScore, 150, 300);
 		g.drawString(newHighScore, 150, 400);
 		
@@ -110,15 +113,22 @@ public class DrawSnakeGamePanel extends JPanel {
 		displayGameGrid(g);
 		displaySnake(g);
 		displayKibble(g);
-		for(Block block : blocks){
-			block.displayBlock(g);
-		}
+        displayBlocks(g);
+//		for(Block block : blocks){
+//			block.displayBlock(g);
+//		}
 //		if (addBlock == true){
 //			block.displayBlock(g);
 //		}
 //		block.displayBlock(g);
 	}
-
+    private void displayBlocks(Graphics g){
+        if(addBlock) {
+            for (Block block : blocks) {
+                block.displayBlock(g);
+            }
+        }
+    }
 	private void displayGameGrid(Graphics g) {
 
 		int maxX = SnakeGame.xPixelMaxDimension;
@@ -194,7 +204,7 @@ public class DrawSnakeGamePanel extends JPanel {
 	private void displayInstructions(Graphics g) {
         g.drawString("Press any key to begin!", 100, 200);
         g.drawString("Press q to quit the game", 100, 300);
-		g.drawString("Press p to go to options", 100, 300);
+		g.drawString("Press p to go to options", 100, 400);
 
     	}
 	private void displayOptions(Graphics g) {

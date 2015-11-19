@@ -14,6 +14,7 @@ public class SnakeGame {
 	public static int xSquares ;
 	public static int ySquares ;
 	public final static int squareSize = 50;
+	public static int numOfBlocks = 3;
 	protected static Snake snake ;
 //	protected static Block block;
 	protected static List<Block> blocks;
@@ -76,7 +77,7 @@ public class SnakeGame {
 		kibble = new Kibble(snake);
 		score = new Score();
 		blocks = new ArrayList<Block>();
-		for(int i = 0; i < 3 ; i++){
+		for(int i = 0; i < numOfBlocks ; i++){
 			blocks.add(new Block(snake));
 		}
 		gameStage = BEFORE_GAME;

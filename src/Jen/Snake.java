@@ -164,44 +164,47 @@ public class Snake {
 				}
 			}
 		}
+//////////////////wall code
+		if(hitWall) {
 
-		//now identify where to add new snake head
-		if (currentHeading == DIRECTION_UP) {		
-			//Subtract 1 from Y coordinate so head is one square up
-			snakeHeadY-- ;
-		}
-		if (currentHeading == DIRECTION_DOWN) {		
-			//Add 1 to Y coordinate so head is 1 square down
-			snakeHeadY++ ;
-		}
-		if (currentHeading == DIRECTION_LEFT) {		
-			//Subtract 1 from X coordinate so head is 1 square to the left
-			snakeHeadX -- ;
-		}
-		if (currentHeading == DIRECTION_RIGHT) {		
-			//Add 1 to X coordinate so head is 1 square to the right
-			snakeHeadX ++ ;
-		}
-
-		//Does this make snake hit the wall?
-//		if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0 ) {
+			//Does this make snake hit the wall?
+			if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0) {
 //			hitWall = true;
-//			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-////			snakeHeadX = maxX/2;
-////			snakeHeadY = maxY/2;
-//			return;
-//		}
-		if (snakeHeadX >= maxX){
-			snakeHeadX = 0;
-		}
-		if (snakeHeadY >= maxY){
-			snakeHeadY = 0;
-		}
-		if (snakeHeadX < 0){
-			snakeHeadX = maxX-1;
-		}
-		if (snakeHeadY < 0){
-			snakeHeadY = maxY-1;
+				SnakeGame.setGameStage(SnakeGame.GAME_OVER);
+//			snakeHeadX = maxX/2;
+//			snakeHeadY = maxY/2;
+				return;
+			}
+			if (snakeHeadX >= maxX) {
+				snakeHeadX = 0;
+			}
+			if (snakeHeadY >= maxY) {
+				snakeHeadY = 0;
+			}
+			if (snakeHeadX < 0) {
+				snakeHeadX = maxX - 1;
+			}
+			if (snakeHeadY < 0) {
+				snakeHeadY = maxY - 1;
+			}
+		}else{
+			//now identify where to add new snake head9
+			if (currentHeading == DIRECTION_UP) {
+				//Subtract 1 from Y coordinate so head is one square up
+				snakeHeadY-- ;
+			}
+			if (currentHeading == DIRECTION_DOWN) {
+				//Add 1 to Y coordinate so head is 1 square down
+				snakeHeadY++ ;
+			}
+			if (currentHeading == DIRECTION_LEFT) {
+				//Subtract 1 from X coordinate so head is 1 square to the left
+				snakeHeadX -- ;
+			}
+			if (currentHeading == DIRECTION_RIGHT) {
+				//Add 1 to X coordinate so head is 1 square to the right
+				snakeHeadX ++ ;
+			}
 		}
 
 
