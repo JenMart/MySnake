@@ -86,7 +86,7 @@ public class GameControls implements KeyListener{ //Listens to users key presses
 			System.exit(0);    //quit if user presses the q key.
 		}
         if( keyPressed == p){
-           DrawSnakeGamePanel.addBlock();
+           panel.changeAddBlock();
 //			SnakeGame.setGameStage(SnakeGame.BEFORE_GAME);
 //			SnakeGame.setGameStage(SnakeGame.GAME_OPTIONS);
         }

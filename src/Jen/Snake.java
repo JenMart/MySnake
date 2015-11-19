@@ -2,6 +2,7 @@ package Jen;
 
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Snake {
 
@@ -9,11 +10,10 @@ public class Snake {
 	final int DIRECTION_DOWN = 1;
 	final int DIRECTION_LEFT = 2;
 	final int DIRECTION_RIGHT = 3;  //These are completely arbitrary numbers. 
-    final static int NOT_A_SEGMENT = 0;
-	private Blocks blocks;
+
 	private boolean hitWall = false;
 	private boolean ateTail = false;
-	private boolean hitBlock = false;
+
 	private int snakeSquares[][];  //represents all of the squares on the screen
 	//NOT pixels!
 	//A 0 means there is no part of the snake in this square
@@ -26,15 +26,13 @@ public class Snake {
 	private int snakeSize;   //size of snake - how many segments?
 
 	private int growthIncrement = 2; //how many squares the snake grows after it eats a kibble
-    private Color colorOfHead;
-    private Color colorOfBody;
+
 	private int justAteMustGrowThisMuch = 0;
 
 	private int maxX, maxY, squareSize;  
 	private int snakeHeadX, snakeHeadY; //store coordinates of head - first segment
 
-//	public Snake(int maxX, int maxY, int squareSize){ //constructor
-public Snake(int maxX, int maxY){
+	public Snake(int maxX, int maxY, int squareSize){ //constructor
 		this.maxX = maxX;
 		this.maxY = maxY;
 		this.squareSize = squareSize;
@@ -42,13 +40,7 @@ public Snake(int maxX, int maxY){
 		snakeSquares = new int[maxX][maxY];
 		fillSnakeSquaresWithZeros();
 		createStartSnake();
-    colorOfHead = Color.PINK;
-    colorOfBody = Color.RED;
 	}
-    public void setSnakeColor(int color) {
-        this.colorOfHead = Color.PINK;
-        this.colorOfBody = Color.RED;
-    }
 
 	protected void createStartSnake(){
 		//snake starts as 3 horizontal squares in the center of the screen, moving left
@@ -103,8 +95,7 @@ public Snake(int maxX, int maxY){
 	}
 
 	public void snakeUp(){
-		if (currentHeading == DIRECTION_UP || currentHeading == DIRECTION_DOWN) {
-            return; }
+		if (currentHeading == DIRECTION_UP || currentHeading == DIRECTION_DOWN) { return; }
 		currentHeading = DIRECTION_UP;
 	}
 	public void snakeDown(){
@@ -131,24 +122,24 @@ public Snake(int maxX, int maxY){
 		//Must check that the direction snake is being sent in is not contrary to current heading
 		//So if current heading is down, and snake is being sent up, then should ignore.
 		//Without this code, if the snake is heading up, and the user presses left then down quickly, the snake will back into itself.
-        if (currentHeading == DIRECTION_DOWN && lastHeading == DIRECTION_UP) {
-            currentHeading = DIRECTION_UP; //keep going the same way
-        }
-        if (currentHeading == DIRECTION_UP && lastHeading == DIRECTION_DOWN) {
-            currentHeading = DIRECTION_DOWN; //keep going the same way
-        }
-        if (currentHeading == DIRECTION_LEFT && lastHeading == DIRECTION_RIGHT) {
-            currentHeading = DIRECTION_RIGHT; //keep going the same way
-        }
-        if (currentHeading == DIRECTION_RIGHT && lastHeading == DIRECTION_LEFT) {
-            currentHeading = DIRECTION_LEFT; //keep going the same way
-        }
+		if (currentHeading == DIRECTION_DOWN && lastHeading == DIRECTION_UP) {
+			currentHeading = DIRECTION_UP; //keep going the same way
+		}
+		if (currentHeading == DIRECTION_UP && lastHeading == DIRECTION_DOWN) {
+			currentHeading = DIRECTION_DOWN; //keep going the same way
+		}
+		if (currentHeading == DIRECTION_LEFT && lastHeading == DIRECTION_RIGHT) {
+			currentHeading = DIRECTION_RIGHT; //keep going the same way
+		}
+		if (currentHeading == DIRECTION_RIGHT && lastHeading == DIRECTION_LEFT) {
+			currentHeading = DIRECTION_LEFT; //keep going the same way
+		}
 		
 		//Did you hit the wall, snake? 
 		//Or eat your tail? Don't move. 
 
-		if (this.didHitWall() == true || this.didEatTail() == true || this.didHitMazeWall() == true) {
-//		if (ateTail == true){
+//		if (hitWall == true || ateTail == true) {
+		if (ateTail == true){
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return;
 
@@ -173,69 +164,50 @@ public Snake(int maxX, int maxY){
 				}
 			}
 		}
+//////////////////wall code
+		if(hitWall) {
 
-		//now identify where to add new snake head
-        if (currentHeading == DIRECTION_UP) {
-            //Subtract 1 from Y coordinate so head is one square up
-            snakeHeadY--;
-        }
-        if (currentHeading == DIRECTION_DOWN) {
-            //Add 1 to Y coordinate so head is 1 square down
-            snakeHeadY++;
-        }
-        if (currentHeading == DIRECTION_LEFT) {
-            //Subtract 1 from X coordinate so head is 1 square to the left
-            snakeHeadX--;
-        }
-        if (currentHeading == DIRECTION_RIGHT) {
-            //Add 1 to X coordinate so head is 1 square to the right
-            snakeHeadX++;
-        }
-
-		//Does this make snake hit the wall?
-//		if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0 ) {
+			//Does this make snake hit the wall?
+			if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0) {
 //			hitWall = true;
-//			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-////			snakeHeadX = maxX/2;
-////			snakeHeadY = maxY/2;
-//			return;
-//		}
-//		if (snakeHeadX >= maxX){
-//			snakeHeadX = 0;
-//		}
-//		if (snakeHeadY >= maxY){
-//			snakeHeadY = 0;
-//		}
-//		if (snakeHeadX < 0){
-//			snakeHeadX = maxX-1;
-//		}
-//		if (snakeHeadY < 0){
-//			snakeHeadY = maxY-1;
-//		}
-        if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0) {
-            if (!SnakeGame.getHasWarpWalls()) {  // AMD: End the game if the warpwalls are turned off
-                hitWall = true;
-                SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-            } else {
-                //AMD: otherwise, move the snake's head to the other side of the board:
-                hitWall = false;
-                // AMD: Need to adjust coordinates based on which wall the snake hit:
-                if (snakeHeadX >= maxX || snakeHeadX < 0) {
-                    // AMD: if it hit the side walls, adjust the X coordinate
-                    snakeHeadX = maxX - Math.abs(snakeHeadX);
-                }
-                else {
-                    // AMD: otherwise, it hit the top/bottom wall and we adjust the Y coordinate
-                    snakeHeadY = maxY - Math.abs(snakeHeadY);
-                }
-                // AMD: Show the new head
-                snakeSquares[snakeHeadX][snakeHeadY] = 1;
-                // AMD: The tip of the tail gets left behind for the head to run into later... how to
-                // fix this? - by checking that all elements larger than snake size get flipped to 0 in
-                // the "if (justAteMustGrowThisMuch == 0) {...}" code below.
-            }
-            return;
-        }
+				SnakeGame.setGameStage(SnakeGame.GAME_OVER);
+//			snakeHeadX = maxX/2;
+//			snakeHeadY = maxY/2;
+				return;
+			}
+			if (snakeHeadX >= maxX) {
+				snakeHeadX = 0;
+			}
+			if (snakeHeadY >= maxY) {
+				snakeHeadY = 0;
+			}
+			if (snakeHeadX < 0) {
+				snakeHeadX = maxX - 1;
+			}
+			if (snakeHeadY < 0) {
+				snakeHeadY = maxY - 1;
+			}
+		}else{
+			//now identify where to add new snake head9
+			if (currentHeading == DIRECTION_UP) {
+				//Subtract 1 from Y coordinate so head is one square up
+				snakeHeadY-- ;
+			}
+			if (currentHeading == DIRECTION_DOWN) {
+				//Add 1 to Y coordinate so head is 1 square down
+				snakeHeadY++ ;
+			}
+			if (currentHeading == DIRECTION_LEFT) {
+				//Subtract 1 from X coordinate so head is 1 square to the left
+				snakeHeadX -- ;
+			}
+			if (currentHeading == DIRECTION_RIGHT) {
+				//Add 1 to X coordinate so head is 1 square to the right
+				snakeHeadX ++ ;
+			}
+		}
+
+
 
 
 		//Does this make the snake eat its tail?
@@ -273,9 +245,8 @@ public Snake(int maxX, int maxY){
 
 	}
 
-	protected boolean didHitWall() {
-		// AMD: Adding warpWalls means that if warpWalls are on, the snake should never hit the wall.
-		return hitWall && !SnakeGame.getHasWarpWalls();
+	protected boolean didHitWall(){ //Never used
+		return hitWall;
 
 	}
 
@@ -291,12 +262,15 @@ public Snake(int maxX, int maxY){
 		return true;
 	}
 
-    public boolean didHitBlock(Blocks blocks){
-        if (blocks.getBlockX() == snakeHeadX && blocks.getBlockY() == snakeHeadY){
-            SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-            return true;
-        }
+    public boolean didHitBlock(List<Block> blocks){
+		for(Block block : blocks) {
+			if (block.getBlockX() == snakeHeadX && block.getBlockY() == snakeHeadY) {
+
+				return true;
+			}
+		}
         return false;
+
     }
 
 	public boolean didEatKibble(Kibble kibble) {
@@ -309,39 +283,17 @@ public Snake(int maxX, int maxY){
 	}
 
 	public String toString(){
-        StringBuffer strBuf = new StringBuffer();
-        for (int y = 0; y < maxY; y++) {
-            for (int x = 0; x < maxX; x++) {
-                strBuf.append(snakeSquares[x][y]);
-            }
-            strBuf.append("\n");
-        }
-        return strBuf.toString();
-//		String textsnake = "";
-//		//This looks the wrong way around. Actually need to do it this way or snake is drawn flipped 90 degrees.
-//		for (int y = 0 ; y < maxY ; y++) {
-//			for (int x = 0 ; x < maxX ; x++){
-//				textsnake = textsnake + snakeSquares[x][y];
-//			}
-//			textsnake += "\n";
-//		}
-//		return textsnake;
+		String textsnake = "";
+		//This looks the wrong way around. Actually need to do it this way or snake is drawn flipped 90 degrees. 
+		for (int y = 0 ; y < maxY ; y++) {
+			for (int x = 0 ; x < maxX ; x++){
+				textsnake = textsnake + snakeSquares[x][y];
+			}
+			textsnake += "\n";
+		}
+		return textsnake;
 	}
-    public void draw(Graphics q) {
-        // AMD: moved from DrawSnakeGamePanel
-        LinkedList<Point> coordinates = this.segmentsToDraw();
 
-        //Draw head in head color
-        q.setColor(colorOfHead);
-        Point head = coordinates.pop();
-        q.fillRect((int) head.getX(), (int) head.getY(), SnakeGame.getSquareSize(), SnakeGame.getSquareSize());
-
-        //Draw rest of snake in body color
-        q.setColor(colorOfBody);
-        for (Point p : coordinates) {
-            q.fillRect((int) p.getX(), (int) p.getY(), SnakeGame.getSquareSize(), SnakeGame.getSquareSize());
-        }
-    }
 	public boolean wonGame() {
 
 		//If all of the squares have snake segments in, the snake has eaten so much kibble 
@@ -377,59 +329,7 @@ public Snake(int maxX, int maxY){
 		}
 		return false;
 	}
-    public boolean didHitMazeWall() {
-        // AMD: are we even using mazewalls?
-        if (!SnakeGame.getHasBlocks()) { return false; }
-        // AMD: has the snake hit the maze wall?
-        boolean didHit = false;
-        //MazeWall mw = DrawSnakeGamePanel.mw1;
-        for (Blocks blk : DrawSnakeGamePanel.getGameWalls()) {
-            // AMD: our decision depends partly on the snake's direction & partly on the line's orientation
-            switch (currentHeading) {
-                case DIRECTION_UP: {
-                    if (blk.getV_or_h() == 'h' && blk.getGridX() == this.snakeHeadX && blk.getGridY() == this.snakeHeadY) {
-                        didHit = true;
-                    }
-                    break;
-                }
-                case DIRECTION_DOWN: {
-                    if (blk.getV_or_h() == 'h' && blk.getGridX() == this.snakeHeadX && blk.getGridY() == this.snakeHeadY + 1) {
-                        didHit = true;
-                    }
-                    break;
-                }
-                case DIRECTION_LEFT: {
-                    if (blk.getV_or_h() == 'v' && blk.getGridX() == this.snakeHeadX && blk.getGridY() == this.snakeHeadY) {
-                        didHit = true;
-                    }
-                    break;
-                }
-                case DIRECTION_RIGHT: {
-                    if (blk.getV_or_h() == 'v' && blk.getGridX() == this.snakeHeadX + 1 && blk.getGridY() == this.snakeHeadY) {
-                        didHit = true;
-                    }
-                    break;
-                }
-                default: {
-                    //FINDBUGS: another switch case with no default.  This one is fine, four clear situations.
-                    // Ultimately, shouldn't get here: leave something here that can be turned on for debugging:
-                    // System.out.println("Invalid direction detected in Snake.didhitmazewall()!");
-                    break;
-                }
-            }
-            // if the current wall under consideration has been hit, we need to exit the loop.
-            if (didHit) { break; }
-        }
-        return didHit;
-    }
-	public void refactor() {
-		// AMD: Allows refactoring of snake variables after options reset
-		this.maxX = SnakeGame.getxSquares();
-		this.maxY = SnakeGame.getySquares();
-		snakeSquares = new int[this.maxX][this.maxY];
-		fillSnakeSquaresWithZeros();
-		createStartSnake();
-	}
+
 
 }
 
