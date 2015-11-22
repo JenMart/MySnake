@@ -26,9 +26,10 @@ public class Options extends JFrame {
     private ButtonGroup screenSizeButtons = new ButtonGroup();
     DrawSnakeGamePanel panel;
     SnakeGame snakeGame;
+    Snake snake;
     private ButtonGroup speedButton = new ButtonGroup();
     private ButtonGroup gridSizeButtons = new ButtonGroup();
-
+    int rScreenSize = 0;
     int gameSpeed = 0;
     double screenSize = 0;
     int gridSize = 0;
@@ -60,8 +61,13 @@ public class Options extends JFrame {
             }
         });
 
-
-
+// snake.makeWarpWalls();
+        warpWallsCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Options.this.warpWallsCheckBox.setEnabled(true);
+            }
+        });
         sumitChangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,6 +76,45 @@ public class Options extends JFrame {
 //                SnakeGame.getSnake().re
                 closeWindow();
             }
+        });
+        /////////////////////////////////////////////////////// Game size Radio Group
+        a500x500RadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {rScreenSize = 500;}
+        });
+        a700x700DefaultRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {rScreenSize = 700;}
+        });
+        a900x900RadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {rScreenSize = 900;}
+        });
+        /////////////////////////////////////////////////////// Grid size Radio Group
+//        a10x10DefaultRadioButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {gridSize = 50;}
+//        });
+//        a25x25RadioButton1.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {gridSize = 500;}
+//        });
+//        a50x50RadioButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {gridSize = 500;}
+//        });
+        /////////////////////////////////////////////////////// Game Speed Radion Group
+        slowRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {gameSpeed = 1000;}
+        });
+        normalRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {gameSpeed = 500;}
+        });
+        MEGARadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {gameSpeed = 250;}
         });
 
 
@@ -96,11 +141,15 @@ public class Options extends JFrame {
             panel.changeAddBlock();
 
         }
-        snakeGame.setxPixelMaxDimension(1001);
-        snakeGame.setyPixelMaxDimension(1001);
-        snakeGame.getSnakeFrame().setSize(1001,1001);
+        if(Options.this.warpWallsCheckBox.isSelected()){
+            snake.makeWarpWalls();
+        }
+        snakeGame.setxPixelMaxDimension(rScreenSize);
+        snakeGame.setyPixelMaxDimension(rScreenSize);
+        snakeGame.getSnakeFrame().setSize(rScreenSize,rScreenSize);
         int numBlocks = comboBox1.getItemCount();
         snakeGame.setNumOfBlocks(numBlocks);
+        System.out.println(rScreenSize);
     }
 
     public void closeWindow() {

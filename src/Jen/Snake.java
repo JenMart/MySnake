@@ -192,27 +192,29 @@ public void makeWarpWalls(){
 //            }
 //            return;
 //        }
-//		if(!hitWall) {
+		if(!hitWall) {
 //			Does this make snake hit the wall?
-			if (snakeHeadX >= maxX-1 || snakeHeadX < 0 || snakeHeadY >= maxY-1 || snakeHeadY < 0) {
+			if (snakeHeadX >= maxX - 1 || snakeHeadX < 0 || snakeHeadY >= maxY - 1 || snakeHeadY < 0) {
 //			hitWall = true;
 				SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 //			snakeHeadX = maxX/2;
 //			snakeHeadY = maxY/2;
 				return;
 			}
-//			if (snakeHeadX >= maxX-1) {
-//				snakeHeadX = 0;
-//			}
-//			if (snakeHeadY >= maxY-1) {
-//				snakeHeadY = 0;
-//			}
-//			if (snakeHeadX < -1) {
-//				snakeHeadX = maxX - 1;
-//			}
-//			if (snakeHeadY < -1) {
-//				snakeHeadY = maxY - 1;
-//			}
+		} else {
+			if (snakeHeadX >= maxX - 1) {
+				snakeHeadX = 0;
+			}
+			if (snakeHeadY >= maxY - 1) {
+				snakeHeadY = 0;
+			}
+			if (snakeHeadX < -1) {
+				snakeHeadX = maxX - 1;
+			}
+			if (snakeHeadY < -1) {
+				snakeHeadY = maxY - 1;
+			}
+		}
 //		}else{
 			//now identify where to add new snake head9
 			if (currentHeading == DIRECTION_UP) {
