@@ -14,7 +14,7 @@ import java.util.List;
 public class DrawSnakeGamePanel extends JPanel {
 	
 	private static int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
-	boolean addBlock = true;
+	boolean addBlock = false;
 	private Snake snake;
 	private Kibble kibble;
 	private Score score;
@@ -204,7 +204,7 @@ public class DrawSnakeGamePanel extends JPanel {
 	private void displayInstructions(Graphics g) {
         g.drawString("Press any key to begin!", 100, 200);
         g.drawString("Press q to quit the game", 100, 300);
-		g.drawString("Press p to go to options", 100, 400);
+		g.drawString("Press p to go to options", 100, 350);
 
     	}
 	private void displayOptions(Graphics g) {

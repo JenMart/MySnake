@@ -9,12 +9,40 @@ import java.util.Timer;
 
 public class SnakeGame {
 	Scanner scanner;
-	public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
+
+    public static int getxPixelMaxDimension() {
+		return xPixelMaxDimension;
+	}
+
+	public static void setxPixelMaxDimension(int xPixelMaxDimension) {
+		SnakeGame.xPixelMaxDimension = xPixelMaxDimension;
+	}
+	public static int getyPixelMaxDimension() {
+		return xPixelMaxDimension;
+	}
+
+
+    public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
+
+	public static void setyPixelMaxDimension(int yPixelMaxDimension) {
+		SnakeGame.yPixelMaxDimension = yPixelMaxDimension;
+	}
+
 	public static int yPixelMaxDimension = 501;
 	public static int xSquares ;
 	public static int ySquares ;
-	public final static int squareSize = 50;
-	public static int numOfBlocks = 3;
+
+	public static int getSquareSize() {
+		return squareSize;
+	}
+
+	public static int squareSize = 50;
+
+	public static void setNumOfBlocks(int numOfBlocks) {
+		SnakeGame.numOfBlocks = numOfBlocks;
+	}
+
+	public static int numOfBlocks = 0;
 	protected static Snake snake ;
 //	protected static Block block;
 	protected static List<Block> blocks;
@@ -27,18 +55,40 @@ public class SnakeGame {
 	static final int GAME_OPTIONS = 5;
 	//instead of the values so you are clear what you are setting. Easy to forget what number is Game over vs. game won
 	//Using constant names instead makes it easier to keep it straight. Refer to these variables
-
-	private static boolean hasWarpWalls = false; // AMD: variable to help implement warp walls.
-	private static boolean hasBlocks = false;  // AMD: variable to help implement maze walls
+	boolean fastSlow = false;
+	boolean hasWarpWalls = false; // AMD: variable to help implement warp walls.
+	private static boolean hasBlocks = true;  // AMD: variable to help implement maze walls
 	//using statements such as SnakeGame.GAME_OVER 
-	protected static final int numBlockWalls = 3;
+
 	private static int gameStage = BEFORE_GAME;  //use this to figure out what should be happening. 
 	//Other classes like Snake and DrawSnakeGamePanel will need to query this, and change its value
+
+
+	public static long getClockInterval() {
+		return clockInterval;
+	}
+
+	public static void setClockInterval(long clockInterval) {
+		SnakeGame.clockInterval = clockInterval;
+	}
 
 	protected static long clockInterval = 500; //controls game speed
 	//Every time the clock ticks, the snake moves
 	//This is the time between clock ticks, in milliseconds
 	//1000 milliseconds = 1 second.
+
+	public void SpeedUp(){
+		fastSlow = !fastSlow;
+		if(fastSlow){
+			clockInterval = 100;
+		}
+		clockInterval = 500;
+
+	}
+
+	public static JFrame getSnakeFrame() {
+		return snakeFrame;
+	}
 
 	static JFrame snakeFrame;
 	static DrawSnakeGamePanel snakePanel;
@@ -126,13 +176,13 @@ public class SnakeGame {
 		SnakeGame.gameStage = gameStage;
 	}
 
-	public static boolean isHasWarpWalls() {
-		return hasWarpWalls;
-	}
-
-	public static void setHasWarpWalls(boolean hasWarpWalls) {
-		SnakeGame.hasWarpWalls = hasWarpWalls;
-	}
+//	public static boolean isHasWarpWalls() {
+//		return hasWarpWalls;
+//	}
+//
+//	public static void setHasWarpWalls(boolean hasWarpWalls) {
+//		SnakeGame.hasWarpWalls = hasWarpWalls;
+//	}
 
 	public static boolean isHasBlocks() {
 		return hasBlocks;
@@ -140,5 +190,8 @@ public class SnakeGame {
 
 	public static void setHasBlocks(boolean hasBlocks) {
 		SnakeGame.hasBlocks = hasBlocks;
+	}
+	public static Snake getSnake() {
+		return SnakeGame.snake;
 	}
 }

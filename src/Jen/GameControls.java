@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class GameControls implements KeyListener{ //Listens to users key presses
 	Snake snake;
     Kibble kibble;
+	SnakeGame snakeGame;
 	GameControls(Snake s){
 		this.snake = s;
 	}
@@ -82,6 +83,8 @@ public class GameControls implements KeyListener{ //Listens to users key presses
 		char q = 'q';
         char p = 'p';
 		char s = 's';
+		char plus = '+';
+		char minus = '-';
 		if( keyPressed == q){
 			System.exit(0);    //quit if user presses the q key.
 		}
@@ -91,7 +94,12 @@ public class GameControls implements KeyListener{ //Listens to users key presses
 //			SnakeGame.setGameStage(SnakeGame.GAME_OPTIONS);
         }
 		if (keyPressed == s){
-			SnakeGame.setGameStage(SnakeGame.BEFORE_GAME);
+//			snake.makeWarpWalls();
+//			snakeGame.setClockInterval(1000);
+//			snakeGame.setxPixelMaxDimension(1001);
+//			snakeGame.setyPixelMaxDimensionPixelMaxDimension(1001);
+			SnakeGame.setGameStage(SnakeGame.GAME_OPTIONS);
+			Options options = new Options();
 		}
 	}
 
