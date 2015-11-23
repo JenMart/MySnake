@@ -165,29 +165,29 @@ public class Snake {
 			}
 		}
 //////////////////wall code
-		if(hitWall) {
+//		if(hitWall) {
 
 			//Does this make snake hit the wall?
-			if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0) {
+			if (snakeHeadX > maxX || snakeHeadX <= 0 || snakeHeadY > maxY || snakeHeadY <= 0) {
 //			hitWall = true;
 				SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 //			snakeHeadX = maxX/2;
 //			snakeHeadY = maxY/2;
 				return;
 			}
-			if (snakeHeadX >= maxX) {
-				snakeHeadX = 0;
-			}
-			if (snakeHeadY >= maxY) {
-				snakeHeadY = 0;
-			}
-			if (snakeHeadX < 0) {
-				snakeHeadX = maxX - 1;
-			}
-			if (snakeHeadY < 0) {
-				snakeHeadY = maxY - 1;
-			}
-		}else{
+//			if (snakeHeadX >= maxX) {
+//				snakeHeadX = 0;
+//			}
+//			if (snakeHeadY >= maxY) {
+//				snakeHeadY = 0;
+//			}
+//			if (snakeHeadX < 0) {
+//				snakeHeadX = maxX - 1;
+//			}
+//			if (snakeHeadY < 0) {
+//				snakeHeadY = maxY - 1;
+//			}
+//		}else{
 			//now identify where to add new snake head9
 			if (currentHeading == DIRECTION_UP) {
 				//Subtract 1 from Y coordinate so head is one square up
@@ -205,7 +205,7 @@ public class Snake {
 				//Add 1 to X coordinate so head is 1 square to the right
 				snakeHeadX ++ ;
 			}
-		}
+//		}
 
 
 
