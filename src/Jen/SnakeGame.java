@@ -10,20 +10,20 @@ import java.util.Timer;
 public class SnakeGame {
 	Scanner scanner;
 
-    public static int getxPixelMaxDimension() {
-		return xPixelMaxDimension;
-	}
-	public static void setxPixelMaxDimension(int xPixelMaxDimension) {
-		SnakeGame.xPixelMaxDimension = xPixelMaxDimension;
-	}
-	public static int getyPixelMaxDimension() {
-		return xPixelMaxDimension;
-	}
-    public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
-	public static void setyPixelMaxDimension(int yPixelMaxDimension) {
-		SnakeGame.yPixelMaxDimension = yPixelMaxDimension;
-	}
-	public static int yPixelMaxDimension = 501;
+//    public static int getxPixelMaxDimension() {
+//		return xPixelMaxDimension;
+//	}
+//	public static void setxPixelMaxDimension(int xPixelMaxDimension) {
+//		SnakeGame.xPixelMaxDimension = xPixelMaxDimension;
+//	}
+//	public static int getyPixelMaxDimension() {
+//		return xPixelMaxDimension;
+//	}
+//    public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
+//	public static void setyPixelMaxDimension(int yPixelMaxDimension) {
+//		SnakeGame.yPixelMaxDimension = yPixelMaxDimension;
+//	}
+//	public static int yPixelMaxDimension = 501;
 	public static int xSquares ;
 	public static int ySquares ;
 	public static Jen.gameSettings gameSettings;
@@ -97,7 +97,7 @@ public class SnakeGame {
 		snakeFrame = new JFrame();
 		snakeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		snakeFrame.setSize(xPixelMaxDimension, yPixelMaxDimension);
+		snakeFrame.setSize(gameSettings.screenX, gameSettings.screenY);
 		snakeFrame.setUndecorated(true); //hide title bar
 		snakeFrame.setVisible(true);
 		snakeFrame.setResizable(false);
@@ -151,12 +151,12 @@ public class SnakeGame {
 			}
 		});
 	}
-	public static void changeSize(){ //Need to learn how to refresh.
-		System.out.println("things");
-		xPixelMaxDimension +=50;
-		yPixelMaxDimension +=50;
-		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, blocks);
-	}
+//	public static void changeSize(){ //Need to learn how to refresh.
+//		System.out.println("things");
+//		xPixelMaxDimension +=50;
+//		yPixelMaxDimension +=50;
+//		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, blocks);
+//	}
 
 
 	public static int getGameStage() {

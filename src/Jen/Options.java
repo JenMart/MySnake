@@ -37,16 +37,9 @@ public class Options extends JFrame {
 
     public Options(){
         super("Game Options");
-
         //// Settings setup
         rScreenSize = SnakeGame.gameSettings.getScreenX();
         gameSpeed = SnakeGame.gameSettings.getGameSpeed();
-
-
-        if(gameSpeed == 500) {
-            normalRadioButton.setSelected(true);
-        }
-
 
         setContentPane(rootPanel);
         pack();
@@ -54,7 +47,7 @@ public class Options extends JFrame {
         setVisible(true);
         JetSetupRadio();
 //        gameSettings = settings;
-
+        setSettings();
         warpWallsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -165,6 +158,25 @@ public class Options extends JFrame {
         SnakeGame.gameSettings.setNumBlocks(numBlocks);
         SnakeGame.gameSettings.setGameSpeed(gameSpeed);
 
+
+    }
+
+    public void setSettings(){
+        if(gameSpeed == 500) {
+            normalRadioButton.setSelected(true);
+        } else if(gameSpeed == 1000) {
+            MEGARadioButton.setSelected(true);
+        }else {
+            slowRadioButton.setSelected(true);
+        }
+
+        if(rScreenSize == 501){
+            a500x500RadioButton.setSelected(true);
+        }else if(rScreenSize == 701){
+            a700x700DefaultRadioButton.setSelected(true);
+        } else{
+            a900x900RadioButton.setSelected(true);
+        }
 
     }
 

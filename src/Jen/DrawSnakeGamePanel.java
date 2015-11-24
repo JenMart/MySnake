@@ -42,7 +42,7 @@ public class DrawSnakeGamePanel extends JPanel {
 	}
 	
 	public Dimension getPreferredSize() {
-        return new Dimension(SnakeGame.xPixelMaxDimension, SnakeGame.yPixelMaxDimension);
+        return new Dimension(SnakeGame.gameSettings.screenX, SnakeGame.gameSettings.screenY);
     }
 
     public void paintComponent(Graphics g) {
@@ -131,8 +131,8 @@ public class DrawSnakeGamePanel extends JPanel {
     }
 	private void displayGameGrid(Graphics g) {
 
-		int maxX = SnakeGame.xPixelMaxDimension;
-		int maxY= SnakeGame.yPixelMaxDimension;
+		int maxX = SnakeGame.gameSettings.screenX;
+		int maxY= SnakeGame.gameSettings.screenY;
 		int squareSize = SnakeGame.squareSize;
 		
 		g.clearRect(0, 0, maxX, maxY);
