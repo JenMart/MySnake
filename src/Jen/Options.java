@@ -27,27 +27,41 @@ public class Options extends JFrame {
     DrawSnakeGamePanel panel;
     SnakeGame snakeGame;
     Snake snake;
+    Jen.gameSettings gameSettings;
     private ButtonGroup speedButton = new ButtonGroup();
     private ButtonGroup gridSizeButtons = new ButtonGroup();
-    int rScreenSize = 0;
-    int gameSpeed = 0;
-    double screenSize = 0;
-    int gridSize = 0;
+    int rScreenSize;
+    int gameSpeed;
+
 
 
     public Options(){
         super("Game Options");
+
+        //// Settings setup
+        rScreenSize = SnakeGame.gameSettings.getScreenX();
+        gameSpeed = SnakeGame.gameSettings.getGameSpeed();
+
+
+        if(gameSpeed == 500) {
+            normalRadioButton.setSelected(true);
+        }
+
+
         setContentPane(rootPanel);
         pack();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         JetSetupRadio();
+//        gameSettings = settings;
+
         warpWallsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
 
             }
         });
+
          mazeWallsCheckBox.addItemListener(new ItemListener() {
              @Override
              public void itemStateChanged(ItemEvent e) {
@@ -61,7 +75,6 @@ public class Options extends JFrame {
             }
         });
 
-// snake.makeWarpWalls();
         warpWallsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -106,8 +119,7 @@ public class Options extends JFrame {
         /////////////////////////////////////////////////////// Game Speed Radion Group
         slowRadioButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {gameSpeed = 1000;}
-        });
+            public void actionPerformed(ActionEvent e) {gameSpeed = 1000;}});
         normalRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {gameSpeed = 500;}
@@ -134,27 +146,30 @@ public class Options extends JFrame {
 
     }
     public void varReset(){
-//        snakeGame.setxPixelMaxDimension(1001);
-//        snakeGame.setyPixelMaxDimension(1001);
-//        snakeGame.setClockInterval(100);
         if(Options.this.mazeWallsCheckBox.isSelected()){
-            panel.changeAddBlock();
+//            panel.changeAddBlock();
+            SnakeGame.gameSettings.setMazeWalls(true);
 
         }
         if(Options.this.warpWallsCheckBox.isSelected()){
-            snake.makeWarpWalls();
+//            snake.makeWarpWalls();
+            SnakeGame.gameSettings.setWarpWalls(true);
         }
-        snakeGame.setxPixelMaxDimension(rScreenSize);
-        snakeGame.setyPixelMaxDimension(rScreenSize);
-        snakeGame.getSnakeFrame().setSize(rScreenSize,rScreenSize);
         int numBlocks = comboBox1.getItemCount();
-        snakeGame.setNumOfBlocks(numBlocks);
-        System.out.println(rScreenSize);
+//        snakeGame.setxPixelMaxDimension(rScreenSize);
+//        snakeGame.setyPixelMaxDimension(rScreenSize);
+//        snakeGame.setNumOfBlocks(numBlocks);
+//        snakeGame.getSnakeFrame().setSize(rScreenSize,rScreenSize);
+        SnakeGame.gameSettings.setScreenX(rScreenSize);
+        SnakeGame.gameSettings.setScreenY(rScreenSize);
+        SnakeGame.gameSettings.setNumBlocks(numBlocks);
+        SnakeGame.gameSettings.setGameSpeed(gameSpeed);
+
+
     }
 
     public void closeWindow() {
-        // snagged from stack overflow: http://stackoverflow.com/questions/1234912/how-to-programmatically-close-a-jframe
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         SnakeGame.setGameStage(SnakeGame.BEFORE_GAME);
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 }

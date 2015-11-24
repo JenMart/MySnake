@@ -13,24 +13,20 @@ public class SnakeGame {
     public static int getxPixelMaxDimension() {
 		return xPixelMaxDimension;
 	}
-
 	public static void setxPixelMaxDimension(int xPixelMaxDimension) {
 		SnakeGame.xPixelMaxDimension = xPixelMaxDimension;
 	}
 	public static int getyPixelMaxDimension() {
 		return xPixelMaxDimension;
 	}
-
-
     public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
-
 	public static void setyPixelMaxDimension(int yPixelMaxDimension) {
 		SnakeGame.yPixelMaxDimension = yPixelMaxDimension;
 	}
-
 	public static int yPixelMaxDimension = 501;
 	public static int xSquares ;
 	public static int ySquares ;
+	public static Jen.gameSettings gameSettings;
 
 	public static int getSquareSize() {
 		return squareSize;
@@ -120,10 +116,10 @@ public class SnakeGame {
 
 	private static void initializeGame() { //sets up the bits that are shown
 		//set up score, snake and first kibble
-		xSquares = xPixelMaxDimension / squareSize; //Defines size of squares
-		ySquares = yPixelMaxDimension / squareSize;
+		xSquares = gameSettings.getScreenX() / squareSize; //Defines size of squares
+		ySquares = gameSettings.getScreenY() / squareSize;
 
-		snake = new Snake(xSquares, ySquares, squareSize);
+		snake = new Snake(xSquares, ySquares, squareSize, gameSettings.isWarpWalls());
 		kibble = new Kibble(snake);
 		score = new Score();
 		blocks = new ArrayList<Block>();
@@ -136,7 +132,7 @@ public class SnakeGame {
 	protected static void newGame() { //Starts clock when new game begins.
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel, blocks);
-		timer.scheduleAtFixedRate(clockTick, 0 , clockInterval);
+		timer.scheduleAtFixedRate(clockTick, 0 ,gameSettings.getGameSpeed());
 		DrawSnakeGamePanel.getGameWalls().clear();
 //		for (int i = 0; i < numBlockWalls; i++) {
 //			DrawSnakeGamePanel.getGameWalls().add(new Block(snake));
@@ -148,6 +144,8 @@ public class SnakeGame {
 		//creating and showing this application's GUI.
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				//boolean mazeWalls, boolean warpWalls, int numBlocks, int screenX, int screenY, int gameSpeed
+				gameSettings = new gameSettings(false, false, 3, 501, 501, 500);
 				initializeGame();
 				createAndShowGUI();
 			}

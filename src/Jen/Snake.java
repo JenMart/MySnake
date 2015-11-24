@@ -11,7 +11,7 @@ public class Snake {
 	final int DIRECTION_LEFT = 2;
 	final int DIRECTION_RIGHT = 3;  //These are completely arbitrary numbers. 
 
-	private boolean hitWall = false;
+	private boolean hitWall;
 	private boolean ateTail = false;
 
 	private int snakeSquares[][];  //represents all of the squares on the screen
@@ -32,7 +32,8 @@ public class Snake {
 	private int maxX, maxY, squareSize;  
 	private int snakeHeadX, snakeHeadY; //store coordinates of head - first segment
 
-	public Snake(int maxX, int maxY, int squareSize){ //constructor
+	public Snake(int maxX, int maxY, int squareSize, boolean hitWall){ //constructor
+		this.hitWall = hitWall;
 		this.maxX = maxX;
 		this.maxY = maxY;
 		this.squareSize = squareSize;

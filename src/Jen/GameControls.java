@@ -23,6 +23,7 @@ public class GameControls implements KeyListener{ //Listens to users key presses
 		//It would be a good idea to catch a ClassCastException here. 
 		
 		DrawSnakeGamePanel panel = (DrawSnakeGamePanel)ev.getComponent();
+		gameSettings gameSettings;
 
 		if (SnakeGame.getGameStage() == SnakeGame.BEFORE_GAME){
 			//Start the game
