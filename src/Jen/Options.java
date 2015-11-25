@@ -25,7 +25,7 @@ public class Options extends JFrame {
 //    DrawSnakeGamePanel panel = new DrawSnakeGamePanel();
     private ButtonGroup screenSizeButtons = new ButtonGroup();
     DrawSnakeGamePanel panel;
-    SnakeGame snakeGame;
+    SnakeGame snakeGame = new SnakeGame();
     Snake snake;
     Jen.gameSettings gameSettings;
     private ButtonGroup speedButton = new ButtonGroup();
@@ -38,8 +38,8 @@ public class Options extends JFrame {
     public Options(){
         super("Game Options");
         //// Settings setup
-        rScreenSize = SnakeGame.gameSettings.getScreenX();
-        gameSpeed = SnakeGame.gameSettings.getGameSpeed();
+        rScreenSize = snakeGame.gameSettings.getScreenX();
+        gameSpeed = snakeGame.gameSettings.getGameSpeed();
 
         setContentPane(rootPanel);
         pack();
@@ -86,15 +86,15 @@ public class Options extends JFrame {
         /////////////////////////////////////////////////////// Game size Radio Group
         a500x500RadioButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {rScreenSize = 500;}
+            public void actionPerformed(ActionEvent e) {rScreenSize = 501;}
         });
         a700x700DefaultRadioButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {rScreenSize = 700;}
+            public void actionPerformed(ActionEvent e) {rScreenSize = 701;}
         });
         a900x900RadioButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {rScreenSize = 900;}
+            public void actionPerformed(ActionEvent e) {rScreenSize = 901;}
         });
         /////////////////////////////////////////////////////// Grid size Radio Group
 //        a10x10DefaultRadioButton.addActionListener(new ActionListener() {
@@ -141,23 +141,22 @@ public class Options extends JFrame {
     public void varReset(){
         if(Options.this.mazeWallsCheckBox.isSelected()){
 //            panel.changeAddBlock();
-            SnakeGame.gameSettings.setMazeWalls(true);
+            snakeGame.gameSettings.setMazeWalls(true);
 
         }
         if(Options.this.warpWallsCheckBox.isSelected()){
 //            snake.makeWarpWalls();
-            SnakeGame.gameSettings.setWarpWalls(true);
+            snakeGame.gameSettings.setWarpWalls(true);
         }
         int numBlocks = comboBox1.getItemCount();
 //        snakeGame.setxPixelMaxDimension(rScreenSize);
 //        snakeGame.setyPixelMaxDimension(rScreenSize);
 //        snakeGame.setNumOfBlocks(numBlocks);
 //        snakeGame.getSnakeFrame().setSize(rScreenSize,rScreenSize);
-        SnakeGame.gameSettings.setScreenX(rScreenSize);
-        SnakeGame.gameSettings.setScreenY(rScreenSize);
-        SnakeGame.gameSettings.setNumBlocks(numBlocks);
-        SnakeGame.gameSettings.setGameSpeed(gameSpeed);
-
+        snakeGame.gameSettings.setScreenX(rScreenSize);
+        snakeGame.gameSettings.setScreenY(rScreenSize);
+        snakeGame.gameSettings.setNumBlocks(numBlocks);
+        snakeGame.gameSettings.setGameSpeed(gameSpeed);
 
     }
 
@@ -165,9 +164,9 @@ public class Options extends JFrame {
         if(gameSpeed == 500) {
             normalRadioButton.setSelected(true);
         } else if(gameSpeed == 1000) {
-            MEGARadioButton.setSelected(true);
-        }else {
             slowRadioButton.setSelected(true);
+        }else {
+            MEGARadioButton.setSelected(true);
         }
 
         if(rScreenSize == 501){
@@ -181,7 +180,9 @@ public class Options extends JFrame {
     }
 
     public void closeWindow() {
-        SnakeGame.setGameStage(SnakeGame.BEFORE_GAME);
+
+
+        snakeGame.setGameStage(snakeGame.BEFORE_GAME);
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 }

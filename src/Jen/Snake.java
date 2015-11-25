@@ -33,7 +33,7 @@ public class Snake {
 	private int snakeHeadX, snakeHeadY; //store coordinates of head - first segment
 
 	public Snake(int maxX, int maxY, int squareSize, boolean hitWall){ //constructor
-		this.hitWall = hitWall;
+		this.hitWall = SnakeGame.gameSettings.isWarpWalls();
 		this.maxX = maxX;
 		this.maxY = maxY;
 		this.squareSize = squareSize;

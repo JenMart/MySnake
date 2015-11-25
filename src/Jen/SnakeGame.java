@@ -9,7 +9,6 @@ import java.util.Timer;
 
 public class SnakeGame {
 	Scanner scanner;
-
 //    public static int getxPixelMaxDimension() {
 //		return xPixelMaxDimension;
 //	}
@@ -26,7 +25,7 @@ public class SnakeGame {
 //	public static int yPixelMaxDimension = 501;
 	public static int xSquares ;
 	public static int ySquares ;
-	public static Jen.gameSettings gameSettings;
+	public static gameSettings gameSettings;
 
 	public static int getSquareSize() {
 		return squareSize;
@@ -116,9 +115,10 @@ public class SnakeGame {
 
 	private static void initializeGame() { //sets up the bits that are shown
 		//set up score, snake and first kibble
+
 		xSquares = gameSettings.getScreenX() / squareSize; //Defines size of squares
 		ySquares = gameSettings.getScreenY() / squareSize;
-
+		numOfBlocks = gameSettings.getNumBlocks();
 		snake = new Snake(xSquares, ySquares, squareSize, gameSettings.isWarpWalls());
 		kibble = new Kibble(snake);
 		score = new Score();
@@ -142,6 +142,7 @@ public class SnakeGame {
 	public static void main(String[] args) {
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.
+
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				//boolean mazeWalls, boolean warpWalls, int numBlocks, int screenX, int screenY, int gameSpeed
@@ -150,6 +151,7 @@ public class SnakeGame {
 				createAndShowGUI();
 			}
 		});
+
 	}
 //	public static void changeSize(){ //Need to learn how to refresh.
 //		System.out.println("things");

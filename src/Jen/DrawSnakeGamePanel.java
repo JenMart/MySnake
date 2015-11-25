@@ -14,7 +14,7 @@ import java.util.List;
 public class DrawSnakeGamePanel extends JPanel {
 	
 	private static int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
-	boolean addBlock = false;
+	boolean addBlock = SnakeGame.gameSettings.isMazeWalls();
 	private Snake snake;
 	private Kibble kibble;
 	private Score score;
