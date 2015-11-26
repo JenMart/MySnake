@@ -11,21 +11,15 @@ public class Options extends JFrame {
     private JRadioButton a500x500RadioButton;
     private JRadioButton a700x700DefaultRadioButton;
     private JRadioButton a900x900RadioButton;
-    private JRadioButton a50x50RadioButton;
-    private JRadioButton a10x10DefaultRadioButton;
-    private JRadioButton a25x25RadioButton1;
     private JRadioButton slowRadioButton;
     private JRadioButton normalRadioButton;
     private JRadioButton MEGARadioButton;
     private JCheckBox warpWallsCheckBox;
     private JCheckBox mazeWallsCheckBox;
-    private JCheckBox randomCheckBox;
-    private JComboBox comboBox1;
     private JButton sumitChangesButton;
     private ButtonGroup screenSizeButtons = new ButtonGroup();
     SnakeGame snakeGame = new SnakeGame();
     private ButtonGroup speedButton = new ButtonGroup();
-    private ButtonGroup gridSizeButtons = new ButtonGroup();
     int rScreenSize;
     int gameSpeed;
     private boolean addMaze = false;
@@ -59,12 +53,6 @@ public class Options extends JFrame {
                 Options.this.mazeWallsCheckBox.setEnabled(true);
              }
          });
-        randomCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-
-            }
-        });
         warpWallsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -119,24 +107,23 @@ public class Options extends JFrame {
     }
     public void varReset(){
         if(Options.this.mazeWallsCheckBox.isSelected()){
-            snakeGame.snakePanel.changeAddBlock();
             addMaze = true;
+            snakeGame.snakePanel.changeAddBlock();
         }
         if(Options.this.warpWallsCheckBox.isSelected()){
             addWarp = true;
         }
-        int numBlocks = comboBox1.getItemCount();
+
         snakeGame.gameSettings.setMazeWalls(addMaze);
         snakeGame.gameSettings.setWarpWalls(addWarp);
         snakeGame.gameSettings.setScreenX(rScreenSize);
         snakeGame.gameSettings.setScreenY(rScreenSize);
-        snakeGame.gameSettings.setNumBlocks(numBlocks);
+        snakeGame.gameSettings.setNumBlocks(3);
         snakeGame.gameSettings.setGameSpeed(gameSpeed);
 
-//        snakeGame.snakePanel.reinit(addMaze, rScreenSize, rScreenSize);
 
-        snakeGame.snake.makeWarp(addWarp); //This setup is a little kitty-whompas but I was running short on time.
-//        snakeGame.RefreshGame(rScreenSize, rScreenSize, numBlocks, addWarp, gameSpeed);
+        snakeGame.snake.makeWarp(addWarp);
+
         snakeGame.RefreshGame();
 
 
@@ -173,5 +160,6 @@ public class Options extends JFrame {
 
         snakeGame.setGameStage(snakeGame.BEFORE_GAME);
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+
     }
 }

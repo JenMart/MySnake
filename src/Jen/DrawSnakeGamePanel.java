@@ -48,9 +48,6 @@ public class DrawSnakeGamePanel extends JPanel {
     }
 		public void changeAddBlock(){
         addBlock = !addBlock;
-//        if(!addBlock) {
-//            blocks = new ArrayList<Block>();
-//        }
         displayBlocks(getGraphics());
 	}
     public void paintComponent(Graphics g) {
@@ -176,12 +173,12 @@ public class DrawSnakeGamePanel extends JPanel {
 	private void displayInstructions(Graphics g) {
         g.drawString("Press any key to begin!", 100, 200);
         g.drawString("Press q to quit the game", 100, 300);
-		g.drawString("Press o to go to options", 100, 350);
+		g.drawString("Press p to go to options", 100, 350);
 
     	}
 	private void displayOptions(Graphics g) {
-		g.drawString("OPTIONS",100,200);
-
+		g.drawString("Turn on maze walls",100,200);
+		g.drawString("Press q to quit the game",100,300);
 
 	}
     

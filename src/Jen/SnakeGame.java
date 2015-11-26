@@ -91,8 +91,10 @@ public class SnakeGame {
 	//Method used when options are submitted
 	public void RefreshGame(){
 		//redefines everything and starts again
+
 		DrawSnakeGamePanel.getGameWalls().clear();
 		createAndShowGUI();
+		initializeGame();
 		newGame();
 	}
 
