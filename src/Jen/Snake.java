@@ -33,7 +33,7 @@ public class Snake {
 	private int snakeHeadX, snakeHeadY; //store coordinates of head - first segment
 
 	public Snake(int maxX, int maxY, int squareSize, boolean hitWall){ //constructor
-		this.hitWall = SnakeGame.gameSettings.isWarpWalls();
+		this.hitWall = SnakeGame.gameSettings.isWarpWalls();//**********************
 		this.maxX = maxX;
 		this.maxY = maxY;
 		this.squareSize = squareSize;
@@ -43,14 +43,14 @@ public class Snake {
 		createStartSnake();
 	}
 
+	public void makeWarp(boolean warp){
+		hitWall = warp;
+	}
+
 	protected void createStartSnake(){
 		//snake starts as 3 horizontal squares in the center of the screen, moving left
 		int screenXCenter = (int) maxX/2;  //Cast just in case we have an odd number
 		int screenYCenter = (int) maxY/2;  //Cast just in case we have an odd number
-//		System.out.println("max x " + maxX);
-//		System.out.println("max y " + maxY);
-//		Scanner scanner = null;
-//		int things = scanner.nextInt();
 
 		snakeSquares[screenXCenter][screenYCenter] = 1;
 		snakeSquares[screenXCenter+1][screenYCenter] = 2;
@@ -112,10 +112,6 @@ public class Snake {
 		currentHeading = DIRECTION_RIGHT;
 	}
 
-//	public void	eatKibble(){
-//		//record how much snake needs to grow after eating food
-//		justAteMustGrowThisMuch += growthIncrement;
-//	}
 public void makeWarpWalls(){
     hitWall = !hitWall;
 
@@ -169,55 +165,30 @@ public void makeWarpWalls(){
 			}
 		}
 //////////////////wall code
-//        if (snakeHeadX >= maxX || snakeHeadX < 1 || snakeHeadY >= maxY || snakeHeadY < 1) {
-//            if (!hitWall) {  // AMD: End the game if the warpwalls are turned off
-//                hitWall = true;
-//                SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-//            } else {
-//                //AMD: otherwise, move the snake's head to the other side of the board:
-//                hitWall = false;
-//                // AMD: Need to adjust coordinates based on which wall the snake hit:
-//                if (snakeHeadX >= maxX || snakeHeadX < 0) {
-//                    // AMD: if it hit the side walls, adjust the X coordinate
-//                    snakeHeadX = maxX - Math.abs(snakeHeadX);
-//                }
-//                else {
-//                    // AMD: otherwise, it hit the top/bottom wall and we adjust the Y coordinate
-//                    snakeHeadY = maxY - Math.abs(snakeHeadY);
-//                }
-//                // AMD: Show the new head
-//                snakeSquares[snakeHeadX][snakeHeadY] = 1;
-//                // AMD: The tip of the tail gets left behind for the head to run into later... how to
-//                // fix this? - by checking that all elements larger than snake size get flipped to 0 in
-//                // the "if (justAteMustGrowThisMuch == 0) {...}" code below.
-//            }
-//            return;
-//        }
 		if(!hitWall) {
 //			Does this make snake hit the wall?
-			if (snakeHeadX >= maxX - 1 || snakeHeadX < 0 || snakeHeadY >= maxY - 1 || snakeHeadY < 0) {
-//			hitWall = true;
+			//for reasons I'm not really sure, this now causes an array error.
+			//Professional Java Dev friend equalty confused.
+			//adding -1 helps to an extent but I'm leaving as-is for posterity
+			if (snakeHeadX >= maxX || snakeHeadX < 0 || snakeHeadY >= maxY || snakeHeadY < 0) {
+
 				SnakeGame.setGameStage(SnakeGame.GAME_OVER);
-//			snakeHeadX = maxX/2;
-//			snakeHeadY = maxY/2;
 				return;
 			}
 		} else {
-			if (snakeHeadX >= maxX - 1) {
+			if (snakeHeadX >= maxX-1) {
 				snakeHeadX = 0;
 			}
-			if (snakeHeadY >= maxY - 1) {
+			if (snakeHeadY >= maxY-1) {
 				snakeHeadY = 0;
 			}
-			if (snakeHeadX < -1) {
-				snakeHeadX = maxX - 1;
+			if (snakeHeadX < 0) {
+				snakeHeadX = maxX;
 			}
-			if (snakeHeadY < -1) {
-				snakeHeadY = maxY - 1;
+			if (snakeHeadY < 0) {
+				snakeHeadY = maxY;
 			}
 		}
-//		}else{
-			//now identify where to add new snake head9
 			if (currentHeading == DIRECTION_UP) {
 				//Subtract 1 from Y coordinate so head is one square up
 				snakeHeadY-- ;
@@ -233,7 +204,6 @@ public void makeWarpWalls(){
 			if (currentHeading == DIRECTION_RIGHT) {
 				//Add 1 to X coordinate so head is 1 square to the right
 				snakeHeadX ++ ;
-//			}
 		}//moveSnake ends
 
 
@@ -351,7 +321,6 @@ public void makeWarpWalls(){
 
 	public boolean isGameOver() { //THIS IS NEVER USED EVER EVER EVER
 		if (hitWall == true || ateTail == true){
-//		if ( ateTail == true){
 			SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 			return true;
 			

@@ -8,19 +8,19 @@ import java.util.List;
 
 /** This class responsible for displaying the graphics, so the snake, grid, kibble, instruction text and high score
  *
- * @author Clara
+ * @Jen Mart!
  *
  */
 public class DrawSnakeGamePanel extends JPanel {
 	
 	private static int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
-	boolean addBlock = SnakeGame.gameSettings.isMazeWalls(); //**********************
+	boolean addBlock = SnakeGame.gameSettings.isMazeWalls(); //addBlock confirms if maze blocks will be used
 	private Snake snake;
 	private Kibble kibble;
 	private Score score;
 	private List<Block> blocks;
-	int maxX = SnakeGame.gameSettings.screenX;//**********************
-	int maxY= SnakeGame.gameSettings.screenY;//**********************
+	int maxX = SnakeGame.gameSettings.screenX;
+	int maxY= SnakeGame.gameSettings.screenY;
 
 	public static ArrayList<Block> getGameWalls() {
 		return gameWalls;
@@ -36,17 +36,6 @@ public class DrawSnakeGamePanel extends JPanel {
 
 	}
 
-
-//	public void changeAddBlock(){
-//        addBlock = !addBlock;
-////        if(!addBlock) {
-////            blocks = new ArrayList<Block>();
-////        }
-//        displayBlocks(getGraphics());
-//	}
-
-
-
 	DrawSnakeGamePanel(Snake s, Kibble k, Score sc, List b){
 		this.snake = s;
 		this.kibble = k;
@@ -57,16 +46,15 @@ public class DrawSnakeGamePanel extends JPanel {
 	public Dimension getPreferredSize() {
         return new Dimension(SnakeGame.gameSettings.screenX, SnakeGame.gameSettings.screenY);
     }
-
+		public void changeAddBlock(){
+        addBlock = !addBlock;
+//        if(!addBlock) {
+//            blocks = new ArrayList<Block>();
+//        }
+        displayBlocks(getGraphics());
+	}
     public void paintComponent(Graphics g) {
         super.paintComponent(g);       
-
-        /* Where are we at in the game? 4 phases.. 
-         * 1. Before game starts
-         * 2. During game
-         * 3. Game lost aka game over
-         * 4. or, game won
-         */
 
         gameStage = SnakeGame.getGameStage();
         
@@ -88,7 +76,7 @@ public class DrawSnakeGamePanel extends JPanel {
 				break;
 			}
 			case 5:{
-				displayOptions(g);
+				displayOptions(g); //added 5th case option.
 				break;
 			}
 		}
@@ -127,15 +115,8 @@ public class DrawSnakeGamePanel extends JPanel {
 		displaySnake(g);
 		displayKibble(g);
         displayBlocks(g);
-//		for(Block block : blocks){
-//			block.displayBlock(g);
-//		}
-//		if (addBlock == true){
-//			block.displayBlock(g);
-//		}
-//		block.displayBlock(g);
 	}
-    private void displayBlocks(Graphics g){
+    private void displayBlocks(Graphics g){ //If blocks are turned on, starts process.
         if(addBlock) {
             for (Block block : blocks) {
                 block.displayBlock(g);
@@ -146,17 +127,15 @@ public class DrawSnakeGamePanel extends JPanel {
 
 
 		int squareSize = SnakeGame.squareSize;
-		
 		g.clearRect(0, 0, maxX, maxY);
-
 		g.setColor(Color.RED);
 
 		//Draw grid - horizontal lines
-		for (int y=0; y <= maxY ; y+= squareSize){			
+		for (int y=0; y <= maxY ; y+= squareSize){
 			g.drawLine(0, y, maxX, y);
 		}
 		//Draw grid - vertical lines
-		for (int x=0; x <= maxX ; x+= squareSize){			
+		for (int x=0; x <= maxX ; x+= squareSize){
 			g.drawLine(x, 0, x, maxY);
 		}
 
@@ -176,25 +155,6 @@ public class DrawSnakeGamePanel extends JPanel {
 		g.fillRect(x+1, y+1, SnakeGame.squareSize-2, SnakeGame.squareSize-2);
 		
 	}
-
-//	private void displayBlock(Graphics g){ //To make maz block
-//		g.setColor(Color.BLUE);
-//
-//		int x = block.getBlockX() * SnakeGame.squareSize;
-//		int y = block.getBlockY() * SnakeGame.squareSize;
-//		g.fillRect(x + 1, y + 1, SnakeGame.squareSize - 2, SnakeGame.squareSize - 2);
-////		for (int z = 1 ; z < 3 ; z++) {
-////			g.fillRect(x + z, y + z, SnakeGame.squareSize - z, SnakeGame.squareSize - z);
-////		}
-//        if (v_or_h == 'v') {
-//            // if vertical, x is 3px wide and y changes
-//            g.fillRect(xPos-1, yPos, 3, linelength);
-//        } else {
-//            // if horizontal, y is 3px wide and x changes
-//            g.fillRect(xPos, yPos-1, linelength, 3);
-//        }
-//	}
-
 
 	private void displaySnake(Graphics g) {
 
@@ -216,12 +176,12 @@ public class DrawSnakeGamePanel extends JPanel {
 	private void displayInstructions(Graphics g) {
         g.drawString("Press any key to begin!", 100, 200);
         g.drawString("Press q to quit the game", 100, 300);
-		g.drawString("Press p to go to options", 100, 350);
+		g.drawString("Press o to go to options", 100, 350);
 
     	}
 	private void displayOptions(Graphics g) {
-		g.drawString("Turn on maze walls",100,200);
-		g.drawString("Press q to quit the game",100,300);
+		g.drawString("OPTIONS",100,200);
+
 
 	}
     

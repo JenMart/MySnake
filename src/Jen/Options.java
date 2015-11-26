@@ -22,16 +22,15 @@ public class Options extends JFrame {
     private JCheckBox randomCheckBox;
     private JComboBox comboBox1;
     private JButton sumitChangesButton;
-//    DrawSnakeGamePanel panel = new DrawSnakeGamePanel();
     private ButtonGroup screenSizeButtons = new ButtonGroup();
-    DrawSnakeGamePanel panel;
     SnakeGame snakeGame = new SnakeGame();
-    Snake snake;
-    Jen.gameSettings gameSettings;
     private ButtonGroup speedButton = new ButtonGroup();
     private ButtonGroup gridSizeButtons = new ButtonGroup();
     int rScreenSize;
     int gameSpeed;
+    private boolean addMaze = false;
+    private boolean addWarp = false;
+
 
 
 
@@ -46,15 +45,14 @@ public class Options extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         JetSetupRadio();
-//        gameSettings = settings;
         setSettings();
+
         warpWallsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
 
             }
         });
-
          mazeWallsCheckBox.addItemListener(new ItemListener() {
              @Override
              public void itemStateChanged(ItemEvent e) {
@@ -67,7 +65,6 @@ public class Options extends JFrame {
 
             }
         });
-
         warpWallsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -79,7 +76,6 @@ public class Options extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //need to add reset method here
                 varReset();
-//                SnakeGame.getSnake().re
                 closeWindow();
             }
         });
@@ -96,19 +92,6 @@ public class Options extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {rScreenSize = 901;}
         });
-        /////////////////////////////////////////////////////// Grid size Radio Group
-//        a10x10DefaultRadioButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {gridSize = 50;}
-//        });
-//        a25x25RadioButton1.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {gridSize = 500;}
-//        });
-//        a50x50RadioButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {gridSize = 500;}
-//        });
         /////////////////////////////////////////////////////// Game Speed Radion Group
         slowRadioButton.addActionListener(new ActionListener() {
             @Override
@@ -129,10 +112,6 @@ public class Options extends JFrame {
         Options.this.screenSizeButtons.add(a700x700DefaultRadioButton);
         Options.this.screenSizeButtons.add(a900x900RadioButton);
         ////////////////////////////////////////////////////////
-        Options.this.gridSizeButtons.add(a10x10DefaultRadioButton);
-        Options.this.gridSizeButtons.add(a25x25RadioButton1);
-        Options.this.gridSizeButtons.add(a50x50RadioButton);
-        ////////////////////////////////////////////////////////
         Options.this.speedButton.add(normalRadioButton);
         Options.this.speedButton.add(slowRadioButton);
         Options.this.speedButton.add(MEGARadioButton); //proper naming conventions do not apply to MEGA button.
@@ -140,23 +119,27 @@ public class Options extends JFrame {
     }
     public void varReset(){
         if(Options.this.mazeWallsCheckBox.isSelected()){
-//            panel.changeAddBlock();
-            snakeGame.gameSettings.setMazeWalls(true);
-
+            snakeGame.snakePanel.changeAddBlock();
+            addMaze = true;
         }
         if(Options.this.warpWallsCheckBox.isSelected()){
-//            snake.makeWarpWalls();
-            snakeGame.gameSettings.setWarpWalls(true);
+            addWarp = true;
         }
         int numBlocks = comboBox1.getItemCount();
-//        snakeGame.setxPixelMaxDimension(rScreenSize);
-//        snakeGame.setyPixelMaxDimension(rScreenSize);
-//        snakeGame.setNumOfBlocks(numBlocks);
-//        snakeGame.getSnakeFrame().setSize(rScreenSize,rScreenSize);
+        snakeGame.gameSettings.setMazeWalls(addMaze);
+        snakeGame.gameSettings.setWarpWalls(addWarp);
         snakeGame.gameSettings.setScreenX(rScreenSize);
         snakeGame.gameSettings.setScreenY(rScreenSize);
         snakeGame.gameSettings.setNumBlocks(numBlocks);
         snakeGame.gameSettings.setGameSpeed(gameSpeed);
+
+//        snakeGame.snakePanel.reinit(addMaze, rScreenSize, rScreenSize);
+
+        snakeGame.snake.makeWarp(addWarp); //This setup is a little kitty-whompas but I was running short on time.
+//        snakeGame.RefreshGame(rScreenSize, rScreenSize, numBlocks, addWarp, gameSpeed);
+        snakeGame.RefreshGame();
+
+
 
     }
 
@@ -175,6 +158,12 @@ public class Options extends JFrame {
             a700x700DefaultRadioButton.setSelected(true);
         } else{
             a900x900RadioButton.setSelected(true);
+        }
+        if(snakeGame.snakePanel.addBlock){
+            Options.this.mazeWallsCheckBox.setSelected(true);
+        }
+        if(snakeGame.snake.didHitWall()){
+            Options.this.warpWallsCheckBox.setSelected(true);
         }
 
     }

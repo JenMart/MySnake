@@ -82,23 +82,13 @@ public class GameControls implements KeyListener{ //Listens to users key presses
         DrawSnakeGamePanel panel = (DrawSnakeGamePanel)ev.getComponent();
 		char keyPressed = ev.getKeyChar();
 		char q = 'q';
-        char p = 'p';
-		char s = 's';
-		char plus = '+';
-		char minus = '-';
+		char o = 'o';
+
 		if( keyPressed == q){
 			System.exit(0);    //quit if user presses the q key.
 		}
-        if( keyPressed == p){
-           panel.changeAddBlock();
-//			SnakeGame.setGameStage(SnakeGame.BEFORE_GAME);
-//			SnakeGame.setGameStage(SnakeGame.GAME_OPTIONS);
-        }
-		if (keyPressed == s){
-//			snake.makeWarpWalls();
-//			snakeGame.setClockInterval(1000);
-//			snakeGame.setxPixelMaxDimension(1001);
-//			snakeGame.setyPixelMaxDimensionPixelMaxDimension(1001);
+
+		if (keyPressed == o){ //When user hits the o button, game is restarted.
 			SnakeGame.setGameStage(SnakeGame.GAME_OPTIONS);
 			Options options = new Options();
 		}

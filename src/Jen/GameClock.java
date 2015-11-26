@@ -41,7 +41,7 @@ public class GameClock extends TimerTask { //TimerTask defines when a task needs
 					}
 					Score.increaseScore(); //increases score
 				}
-				if (snake.didHitBlock(blocks) && gamePanel.addBlock){
+				if (snake.didHitBlock(blocks) && gamePanel.addBlock){ //added in maze block rule.
 					SnakeGame.setGameStage(SnakeGame.GAME_OVER);
 				}
 

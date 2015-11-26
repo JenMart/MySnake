@@ -4,11 +4,7 @@ package Jen;
  * Created by jensinamart on 11/23/15.
  */
 public class gameSettings { //POJO!
-    //mazewalls
-    //number of blocks for mazewall
-    //warp walls
-    //grid x & y.
-    //game speed
+    //This holds all the variables later used for altering the game state.
 
     public boolean mazeWalls;
     public boolean warpWalls;

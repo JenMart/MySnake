@@ -8,41 +8,23 @@ import java.util.Timer;
 
 
 public class SnakeGame {
-	Scanner scanner;
-//    public static int getxPixelMaxDimension() {
-//		return xPixelMaxDimension;
-//	}
-//	public static void setxPixelMaxDimension(int xPixelMaxDimension) {
-//		SnakeGame.xPixelMaxDimension = xPixelMaxDimension;
-//	}
-//	public static int getyPixelMaxDimension() {
-//		return xPixelMaxDimension;
-//	}
-//    public static int xPixelMaxDimension = 501;  //Pixels in window. 501 to have 50-pixel squares plus 1 to draw a border on last square
-//	public static void setyPixelMaxDimension(int yPixelMaxDimension) {
-//		SnakeGame.yPixelMaxDimension = yPixelMaxDimension;
-//	}
-//	public static int yPixelMaxDimension = 501;
 	public static int xSquares ;
 	public static int ySquares ;
-	public static gameSettings gameSettings;
-
-	public static int getSquareSize() {
-		return squareSize;
-	}
-
+	public static int yPixelMaxDimension;
+	public static int xPixelMaxDimension;
 	public static int squareSize = 50;
-
-	public static void setNumOfBlocks(int numOfBlocks) {
-		SnakeGame.numOfBlocks = numOfBlocks;
-	}
-
 	public static int numOfBlocks = 0;
-	protected static Snake snake ;
-//	protected static Block block;
+	boolean fastSlow = false;
+	private static boolean hasBlocks = true;  // AMD: variable to help implement maze walls
+
+	protected static Snake snake ; //other classes being called but will be initialized later.
 	protected static List<Block> blocks;
 	protected static Kibble kibble;
 	protected static Score score;
+	public static gameSettings gameSettings;
+	static JFrame snakeFrame;
+	static DrawSnakeGamePanel snakePanel;
+
 	static final int BEFORE_GAME = 1;
 	static final int DURING_GAME = 2;
 	static final int GAME_OVER = 3;
@@ -50,43 +32,18 @@ public class SnakeGame {
 	static final int GAME_OPTIONS = 5;
 	//instead of the values so you are clear what you are setting. Easy to forget what number is Game over vs. game won
 	//Using constant names instead makes it easier to keep it straight. Refer to these variables
-	boolean fastSlow = false;
-	boolean hasWarpWalls = false; // AMD: variable to help implement warp walls.
-	private static boolean hasBlocks = true;  // AMD: variable to help implement maze walls
-	//using statements such as SnakeGame.GAME_OVER 
 
+	//using statements such as SnakeGame.GAME_OVER
 	private static int gameStage = BEFORE_GAME;  //use this to figure out what should be happening. 
 	//Other classes like Snake and DrawSnakeGamePanel will need to query this, and change its value
 
-
-	public static long getClockInterval() {
-		return clockInterval;
-	}
-
-	public static void setClockInterval(long clockInterval) {
-		SnakeGame.clockInterval = clockInterval;
-	}
-
-	protected static long clockInterval = 500; //controls game speed
+	protected static long clockInterval; //controls game speed
 	//Every time the clock ticks, the snake moves
 	//This is the time between clock ticks, in milliseconds
 	//1000 milliseconds = 1 second.
 
-	public void SpeedUp(){
-		fastSlow = !fastSlow;
-		if(fastSlow){
-			clockInterval = 100;
-		}
-		clockInterval = 500;
 
-	}
 
-	public static JFrame getSnakeFrame() {
-		return snakeFrame;
-	}
-
-	static JFrame snakeFrame;
-	static DrawSnakeGamePanel snakePanel;
 	//Framework for this class adapted from the Java Swing Tutorial, FrameDemo and Custom Painting Demo. You should find them useful too.
 	//http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
 	//http://docs.oracle.com/javase/tutorial/uiswing/painting/step2.html
@@ -96,7 +53,7 @@ public class SnakeGame {
 		snakeFrame = new JFrame();
 		snakeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		snakeFrame.setSize(gameSettings.screenX, gameSettings.screenY);
+		snakeFrame.setSize(gameSettings.screenX, gameSettings.screenY); //**********************
 		snakeFrame.setUndecorated(true); //hide title bar
 		snakeFrame.setVisible(true);
 		snakeFrame.setResizable(false);
@@ -115,9 +72,11 @@ public class SnakeGame {
 
 	private static void initializeGame() { //sets up the bits that are shown
 		//set up score, snake and first kibble
-
-		xSquares = gameSettings.getScreenX() / squareSize; //Defines size of squares
-		ySquares = gameSettings.getScreenY() / squareSize;
+		clockInterval = gameSettings.getGameSpeed();
+		yPixelMaxDimension = gameSettings.getScreenY();
+		xPixelMaxDimension = gameSettings.getScreenX();
+		xSquares = xPixelMaxDimension / squareSize; //Defines size of squares
+		ySquares = yPixelMaxDimension / squareSize;
 		numOfBlocks = gameSettings.getNumBlocks();
 		snake = new Snake(xSquares, ySquares, squareSize, gameSettings.isWarpWalls());
 		kibble = new Kibble(snake);
@@ -129,14 +88,19 @@ public class SnakeGame {
 		gameStage = BEFORE_GAME;
 	}
 
+	//Method used when options are submitted
+	public void RefreshGame(){
+		//redefines everything and starts again
+		DrawSnakeGamePanel.getGameWalls().clear();
+		createAndShowGUI();
+		newGame();
+	}
+
 	protected static void newGame() { //Starts clock when new game begins.
 		Timer timer = new Timer();
 		GameClock clockTick = new GameClock(snake, kibble, score, snakePanel, blocks);
-		timer.scheduleAtFixedRate(clockTick, 0 ,gameSettings.getGameSpeed());
+		timer.scheduleAtFixedRate(clockTick, 0 ,clockInterval);
 		DrawSnakeGamePanel.getGameWalls().clear();
-//		for (int i = 0; i < numBlockWalls; i++) {
-//			DrawSnakeGamePanel.getGameWalls().add(new Block(snake));
-//		}
 	}
 
 	public static void main(String[] args) {
@@ -146,20 +110,13 @@ public class SnakeGame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				//boolean mazeWalls, boolean warpWalls, int numBlocks, int screenX, int screenY, int gameSpeed
-				gameSettings = new gameSettings(false, false, 3, 501, 501, 500);
+				gameSettings = new gameSettings(false, false, 3, 501, 501, 500); //sets initial peremeters
 				initializeGame();
 				createAndShowGUI();
 			}
 		});
 
 	}
-//	public static void changeSize(){ //Need to learn how to refresh.
-//		System.out.println("things");
-//		xPixelMaxDimension +=50;
-//		yPixelMaxDimension +=50;
-//		snakePanel = new DrawSnakeGamePanel(snake, kibble, score, blocks);
-//	}
-
 
 	public static int getGameStage() {
 		return gameStage;
@@ -176,22 +133,4 @@ public class SnakeGame {
 		SnakeGame.gameStage = gameStage;
 	}
 
-//	public static boolean isHasWarpWalls() {
-//		return hasWarpWalls;
-//	}
-//
-//	public static void setHasWarpWalls(boolean hasWarpWalls) {
-//		SnakeGame.hasWarpWalls = hasWarpWalls;
-//	}
-
-	public static boolean isHasBlocks() {
-		return hasBlocks;
-	}
-
-	public static void setHasBlocks(boolean hasBlocks) {
-		SnakeGame.hasBlocks = hasBlocks;
-	}
-	public static Snake getSnake() {
-		return SnakeGame.snake;
-	}
 }

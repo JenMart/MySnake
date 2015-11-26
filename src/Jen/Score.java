@@ -5,7 +5,7 @@ package Jen;
  */
 
 
-public class Score {
+public class Score { //No chnages here.
 
 	protected static int score;
 	protected static int highScore = 0;
