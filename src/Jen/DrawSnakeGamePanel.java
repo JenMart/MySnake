@@ -14,26 +14,39 @@ import java.util.List;
 public class DrawSnakeGamePanel extends JPanel {
 	
 	private static int gameStage = SnakeGame.BEFORE_GAME;  //use this to figure out what to paint
-	boolean addBlock = SnakeGame.gameSettings.isMazeWalls();
+	boolean addBlock = SnakeGame.gameSettings.isMazeWalls(); //**********************
 	private Snake snake;
 	private Kibble kibble;
 	private Score score;
 	private List<Block> blocks;
+	int maxX = SnakeGame.gameSettings.screenX;//**********************
+	int maxY= SnakeGame.gameSettings.screenY;//**********************
 
 	public static ArrayList<Block> getGameWalls() {
 		return gameWalls;
 	}
 
 	private final static ArrayList<Block> gameWalls = new ArrayList<Block>();
+	public void reinit(boolean mazeBlock, int x, int y){
+		addBlock = mazeBlock;
+		displayBlocks(getGraphics());
 
-	public void changeAddBlock(){
-        addBlock = !addBlock;
-//        if(!addBlock) {
-//            blocks = new ArrayList<Block>();
-//        }
-        displayBlocks(getGraphics());
+		maxX = x;
+		maxY = y;
+
 	}
-	
+
+
+//	public void changeAddBlock(){
+//        addBlock = !addBlock;
+////        if(!addBlock) {
+////            blocks = new ArrayList<Block>();
+////        }
+//        displayBlocks(getGraphics());
+//	}
+
+
+
 	DrawSnakeGamePanel(Snake s, Kibble k, Score sc, List b){
 		this.snake = s;
 		this.kibble = k;
@@ -131,8 +144,7 @@ public class DrawSnakeGamePanel extends JPanel {
     }
 	private void displayGameGrid(Graphics g) {
 
-		int maxX = SnakeGame.gameSettings.screenX;
-		int maxY= SnakeGame.gameSettings.screenY;
+
 		int squareSize = SnakeGame.squareSize;
 		
 		g.clearRect(0, 0, maxX, maxY);
